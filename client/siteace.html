@@ -1,0 +1,276 @@
+<head>
+  <title>siteace</title>
+</head>
+
+<body>
+	<!-- navbar  - you will be putting the login functions here -->
+	
+	
+</body>
+
+<template name="ApplicationLayout">
+	{{> yield "navbar"}}
+	{{> yield "jumbotron"}}
+	{{> yield "main"}}
+	{{> yield "footer"}}
+	
+
+</template>
+
+
+
+<template name="navbar">
+	<nav class="navbar navbar-default">
+	  <div class="container">
+	    <div class="">
+	    	<div class="navbar-left">
+		    <a class="navbar-brand" href="/">
+		        <span class="glyphicon glyphicon-fire"></span> 
+		        <span style="font-size:1.5em">Site Ace</span>
+		    </a>
+			</div>
+			<div class="loginButton">
+			 {{>loginButtons}}
+			</div>
+		</div>
+	  </div>
+	</nav>
+
+</template>
+
+<template name="jumbotron">
+	<div class="jumbotron">
+		<div class="container">
+			<div class="row">
+				<div style="text-align:center">
+					<div>
+						<h1 style="color:#fff">Welcome to my Websites aggregator</h1>
+					</div>
+					<br/><br/>
+					{{> searchBox}}
+					<br/>
+					{{> website_form}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+	
+<template name="ranking">
+<div class="container">
+		{{> website_list}}
+	</div>
+</template>
+<template name="website_form">
+
+	{{#if currentUser}}
+	<a class="btn btn-default js-toggle-website-form" href="#" data-toggle="modal" data-target="#formAddModal">
+  		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+  		Add your website
+	</a>
+	<p style="padding:20px"></p>
+	{{/if}}
+
+<div class="modal fade" id="formAddModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h4>Add a website to the list</h4>
+			</div>
+			<div class="modal-body">
+
+	<div id="website_form" class="hidden_div">
+
+		<div class="info_form hidden"></div>
+		<form class="js-save-website-form">
+			<div class="form-group">
+				  	<div class="form-group">
+					    <label for="url">Site address</label>
+					    <div class="input-group">
+						    <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+						    <span class="input-group-btn">
+						    <button type="button" id="js-websiteInfo" class="btn btn-primary"> Get Website infos</button>
+							</span>
+						</div>
+					    <div class="hidden errorMatch">Error while matching website
+					    </div>
+				  	</div>
+
+				  <div class="form-group">
+				    <label for="title">Title</label>
+				    <input type="text" class="form-control" id="title" placeholder="Mysite">
+				  </div>
+				    <div class="form-group">
+				    <label for="description">Description</label>
+				    <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+				  </div>
+				  <div class="form-group">
+				    <label for="image">Image</label>
+				    <input type="text" class="form-control" id="image" placeholder="Myimage">
+				  </div>
+				<button type="submit" class="btn btn-success">Submit</button>
+			</div> <!-- /form group Total-->
+		</form>
+	</div>
+
+			</div>  <!-- /modalBody -->
+
+		</div>
+	</div>	
+</div> <!-- /formAddModal -->
+	
+</template>
+
+<template name="searchBox">
+<div class="searchBox">
+	<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#searchModal"><span class="glyphicon glyphicon-search"> </span> Search for a Website</button>
+	
+	<div id="searchModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Search your website</h4>
+				</div>
+				<div class="modal-body">
+					<p>Type the title of the website to check if it is already in the list</p>
+					{{> EasySearch.Input index=websitesIndex}}
+					<br/>
+					<hr/>
+					<ul class="unstyled-list" style="text-align:left">
+        				{{#EasySearch.Each index=websitesIndex }}
+            			<li>
+            				<a target="_blank" href="{{url}}">{{title}}
+            				</a>
+						</li>
+        				{{/EasySearch.Each}}
+    				</ul>
+    				<hr/>
+				</div>
+			</div>
+		</div>
+	</div> <!-- / searchModal -->
+</div> <!-- / searchBox -->
+</template>
+
+<!-- template that displays several website items -->
+<template name="website_list">
+
+	<div class="row">
+		<div class="col-sm-2">
+		</div>
+		<div class=" col-xs-12 col-sm-8">
+			<div class="websiteList">
+				<h4 style="text-align:center"><span class="glyphicon glyphicon-pushpin"></span> Here is a list of all the website already added by users</h4>
+	<ol>
+	{{#each websites}}
+	{{>website_item}}
+	{{/each}}
+	</ol>
+			</div>
+		</div>
+		<div class="col-sm-2">
+		</div>
+	</div>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+<div class="websiteItem">
+	<li id="{{_id}}">
+		<a href="{{url}}"><h3>{{title}}</h3></a>
+		<p>
+			{{description}}
+		</p>
+			{{#if createdAt}}
+		<p> Added : {{createdAt}}</p>
+			{{/if}}
+		<p>
+			<a href="/details/{{_id}}" id="{{title}}" class="btn btn-default js-detail-btn">
+				Details &raquo;
+			</a>
+			<span class="pull-right">
+				<span class="count">{{countUp}}</span>
+				<a href="#" class="btn btn-success js-upvote">
+				<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+				</a>
+				<a href="#" class="btn btn-danger js-downvote">
+				<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+				</a>
+				<span class="count">{{countDown}}</span>
+			</span>
+		</p>
+		<p class="info-like"></p> 
+		<hr/>
+		
+	</li>
+</div>
+</template>
+
+<template name="website_detail">
+	<header class="jumbotron">
+		<div class="container" style="text-align:center">
+			<h1><a style="color:#fff" href="{{url}}"> {{title}} </a></h1>
+			<p style="padding:20px"></p>
+			<h3 style="color:#fff">{{description}}</h3>
+		</div>
+	</header>
+
+	<div class="container">
+		<a href="/" class="btn btn-default">Back to websites list</a>
+		<p style="padding:20px"></p>
+		<div class="message-container">
+			{{#if title}}
+			<ul>
+			
+			{{#each post}}
+			{{> single_post}}
+			{{/each}}
+			
+			</ul>	
+			{{/if}}
+		</div> <br/>
+		<form class="js-post-comment">
+			<div class="form-group">
+					<div class="col-sm-6 col-sm-offset-3">
+				<textarea id="typeMessage" class="form-control" name="post" rows="4" placeholder="Share your thoughts about this website"></textarea>
+				</div>
+				<br/>
+				<button class="btn btn-info">Post</button>
+			
+			</div>
+		</form>
+	</div> <!-- /container -->
+
+</template>
+
+<template name="single_post">
+	<div class="container">
+	<div class="row send-post">
+
+		<div class="col-xs-1 push-right">
+			<span class="glyphicon glyphicon-comment" style="font-size: 30px"></span>
+		</div>
+		<div class="col-xs-11 message-post">
+		{{getUser createdBy}} : On {{createdAt}} <br/>
+		&nbsp; {{post}}
+		</div>
+		
+		<hr/>
+	</div>
+	</div>
+
+</template>
+
+<template name="footer">
+	<p style="padding:40px"></p>
+	<footer>
+		<p style="padding:30px"></p>
+		<h2>All your favorite websites on one website</h2>
+	</footer>
+</template>
+
+
+
+

@@ -1,0 +1,103 @@
+/* CSS declarations go here */
+
+body{
+	background-color: #e5e5e5;
+}
+a:hover{
+	text-decoration:none;
+}
+footer {
+	background-image:url("http://img15.hostingpics.net/pics/961684nightskybackground14391263141jp.jpg");
+	background-size: cover;
+	height:200px;
+	text-align:center;
+	vertical-align:middle;
+}
+footer h2 {
+	color:#fff;
+}
+
+.hidden_div{
+	display:none;
+}
+.form-group{
+	text-align:left;
+}
+
+.info_form{
+	border:solid 1px red;
+	width:220px;
+	color:red;
+	padding: 2px 2%;
+	text-align:center;
+	margin: 10px 0;
+	background-color: #ffd1d1;
+	border-radius: 5px
+
+}
+
+.message-container{
+	width:100%;
+	min-height:300px;
+	max-height: 400px;
+	border:7px ridge #0000e5;
+	border-radius:5px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	word-wrap:break-word;
+	background-color:#fff;
+	
+
+}
+.send-post{
+	
+	padding: 10px 0px;
+}
+
+.navbar .navbar-left{
+	width:80%;
+}
+.navbar{
+	margin-bottom: 0px
+}
+.loginButton{
+	position:relative;
+	top:10px;
+}
+.jumbotron{
+	background-image: url("http://psycho-therapie-toulouse.fr/wp-content/uploads/2015/06/7.jpg");
+	margin-bottom: 60px;
+	height:300px;
+}
+
+.websiteItem{
+	margin:3em;
+	width:80%;
+}
+
+.websiteList{
+	background-color:#f2f2f2;
+	border:4px double #a6a6a6;
+	border-radius: 5px;
+}
+.message-post{
+	border-left: 1px ridge #e5e5e5
+}
+
+.info-success{
+	color:green;
+	background-color: #b2d8b2;
+	display:inline-block;
+	border: 1px green solid;
+	border-radius: 5px;
+	padding:0.5em;
+}
+.info-fail{
+	color:red;
+	background-color: #ffd1d1;
+	display:inline-block;
+	border: 1px red solid;
+	border-radius: 5px;
+	padding:0.5em;
+}
+
