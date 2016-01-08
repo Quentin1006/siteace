@@ -1,5 +1,3 @@
-
-
 	/////
 	// Routing 
 	/////	
@@ -19,7 +17,7 @@
 	  });
 	  this.render('footer',{
 	  	to:"footer"
-	  })
+	  });
 
   
 	});
@@ -52,7 +50,7 @@ Accounts.ui.config({
 	/////
 	Template.searchBox.helpers({
 		websitesIndex: () => WebsitesIndex
-	})
+	});
 
 	// helper function that returns all available websites
 	Template.website_list.helpers({
