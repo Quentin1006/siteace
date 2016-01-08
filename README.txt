@@ -1,1 +1,1 @@
-Ce projet est un aggregateur de site web crée avec meteor 
+Ce projet est un aggregateur de site web crée avec meteor.js
